@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body class="page">
+  <div class="container">
+    <h1 class="title">🎚️ FM Radio (TEA5767)</h1>
+
+    <!-- Status Card -->
+    <div class="card">
+      <div class="card-grid">
+        <div>
+          <div class="label">Station</div>
+          <div id="name" class="value">—</div>
+        </div>
+        <div>
+          <div class="label">Frequency</div>
+          <div id="freq" class="value">—</div>
+        </div>
+        <div>
+          <div class="label">Audio</div>
+          <div id="stereo" class="value">—</div>
+        </div>
+        <div>
+          <div class="label">Signal</div>
+          <div id="signal" class="value">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="grid controls">
+      <button onclick="mute()" id="muteBtn" class="btn danger">Mute</button>
+      <button onclick="unmute()" id="unmuteBtn" class="btn success">Unmute</button>
+      <button onclick="step('down')" class="btn dark">− 0.1 MHz</button>
+      <button onclick="step('up')" class="btn dark">+ 0.1 MHz</button>
+    </div>
+
+    <!-- Mono/Stereo -->
+    <div class="row">
+      <button onclick="setMono(true)" class="btn">Force Mono</button>
+      <button onclick="setMono(false)" class="btn">Stereo (Auto)</button>
+    </div>
+
+    <!-- Presets -->
+    <div class="card">
+      <div class="label mb">Presets</div>
+      <div class="grid presets">
+        {% for freq, name in presets %}
+          <button onclick="tune({{ '%.1f'|format(freq) }})" class="btn brand">
+            {{ name }} ({{ '%.1f'|format(freq) }})
+          </button>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

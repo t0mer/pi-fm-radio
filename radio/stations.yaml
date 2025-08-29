@@ -1,0 +1,10 @@
+# stations.yaml
+stations:
+  - name: "Glgltz"
+    freq: 91.8
+  - name: "Echo 99 FM"
+    freq: 99.0
+  - name: "Radio Tel Aviv"
+    freq: 102.0
+  - name: "Radius 100 FM"
+    freq: 100.0

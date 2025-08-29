@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body class="retro-body">
+  <div class="radio-wrap">
+    <!-- Top plate / brand -->
+    <div class="radio-header">
+      <div class="radio-brand">Pi-FM Console</div>
+      <div class="radio-badge">TEA5767</div>
+    </div>
+
+    <div class="radio-main">
+      <!-- Left: Big Dial -->
+      <div class="dial-area">
+        <div class="dial">
+          <!-- Scale ticks -->
+          <div class="dial-scale">
+            <!-- We render tick labels via CSS ::before; just need the container -->
+          </div>
+          <!-- Needle -->
+          <div id="needle" class="needle"></div>
+          <!-- Center cap -->
+          <div class="dial-cap"></div>
+        </div>
+
+        <!-- Frequency window -->
+        <div class="freq-window">
+          <div class="freq-led"><span id="freq">—</span></div>
+          <div class="freq-label">MHz</div>
+        </div>
+      </div>
+
+      <!-- Right: Status + Controls -->
+      <div class="panel">
+        <!-- Station -->
+        <div class="station-card">
+          <div class="station-label">Station</div>
+          <div id="name" class="station-name">—</div>
+        </div>
+
+        <!-- Lamps -->
+        <div class="lamps">
+          <div class="lamp">
+            <div id="lamp-stereo" class="lamp-dot"></div>
+            <div class="lamp-text">Stereo</div>
+          </div>
+          <div class="lamp">
+            <div id="lamp-mute" class="lamp-dot lamp-amber"></div>
+            <div class="lamp-text">Mute</div>
+          </div>
+        </div>
+
+        <!-- Signal meter -->
+        <div class="meter">
+          <div class="meter-label">Signal</div>
+          <div class="meter-bars" id="meter">
+            <!-- 15 bars -->
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+
+        <!-- Transport buttons -->
+        <div class="controls">
+          <button class="btn btn-dark" onclick="step('down')">◀ 0.1</button>
+          <button class="btn btn-dark" onclick="step('up')">0.1 ▶</button>
+          <button class="btn btn-amber" onclick="mute()">Mute</button>
+          <button class="btn btn-green" onclick="unmute()">Unmute</button>
+          <button class="btn" onclick="setMono(true)">Mono</button>
+          <button class="btn" onclick="setMono(false)">Stereo</button>
+        </div>
+
+        <!-- Presets -->
+        <div class="presets">
+          <div class="preset-title">Presets</div>
+          <div class="preset-grid">
+            {% for freq, name in presets %}
+              <button class="preset-btn" onclick="tune({{ '%.1f'|format(freq) }})">
+                <span class="preset-name">{{ name }}</span>
+                <span class="preset-freq">{{ '%.1f'|format(freq) }}</span>
+              </button>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Speaker grill -->
+    <div class="speaker"></div>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

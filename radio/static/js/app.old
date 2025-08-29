@@ -1,0 +1,53 @@
+async function getStatus() {
+  try {
+    const r = await fetch('/api/status');
+    const j = await r.json();
+    document.getElementById('freq').innerText = j.frequency.toFixed(1) + ' MHz';
+    document.getElementById('name').innerText = j.station_name;
+    document.getElementById('stereo').innerText = j.stereo ? 'Stereo' : 'Mono';
+    document.getElementById('signal').innerText = j.signal + ' / 15';
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+async function tune(freq) {
+  await fetch('/api/tune', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ frequency: Number(freq) })
+  });
+  await getStatus();
+}
+
+async function step(dir) {
+  await fetch('/api/step', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ direction: dir })
+  });
+  await getStatus();
+}
+
+async function mute() {
+  await fetch('/api/mute', { method: 'POST' });
+  await getStatus();
+}
+
+async function unmute() {
+  await fetch('/api/unmute', { method: 'POST' });
+  await getStatus();
+}
+
+async function setMono(forceMono) {
+  await fetch('/api/mono', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ mono: !!forceMono })
+  });
+  await getStatus();
+}
+
+setInterval(getStatus, 800);
+window.addEventListener('load', getStatus);
+
